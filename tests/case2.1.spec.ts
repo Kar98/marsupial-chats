@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { test } from "../data/case2/testdata";
 import { Api } from '../data/case2/api';
 import { get_environment, get_token } from '../data/case2/funcs';
 
@@ -13,15 +14,12 @@ import { get_environment, get_token } from '../data/case2/funcs';
  * manufacturer: "lockheed"
  * }
  */
-test('Check lockheed ID returns correctly', async ({ page }) => {
-    //process.env.ENV = 'uat'; // Environment details
-    let testdata = { planeId: 2, manufacturerId: 2 };
-    // Below works for dev only
-    let username = 'Certified';
-    let password = 'B0mb3r';
-
-    const token = get_token(username,password);
-    let res = await Api.get_plane(token, testdata.planeId);
+test('Check lockheed ID returns correctly', async ({ td }) => {
+    // Test data
+    let planeId = 2;
+    let res = await Api.get_plane(td.token, planeId);
+    // Do test
+    console.log(res.data);
     expect(res.data.name).toEqual('sr71');
     expect(res.data.manufacturer).toEqual('lockheed');
 });
