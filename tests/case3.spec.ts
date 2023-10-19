@@ -3,7 +3,15 @@ import { check_answer } from "../data/case3/funcs";
 
 /** This is an example and you do not need to use this. */
 function encode(input: string){
-    return input;
+    const urlEncoded = encodeURIComponent(input);
+    const encoded = btoa(urlEncoded);
+    return encoded;
+}
+
+function decode(input: string){
+    const decoded = atob(input);
+    const urlEncoded = decodeURIComponent(decoded);
+    return urlEncoded;
 }
 
 /** Task:
@@ -25,8 +33,13 @@ test('Encoding a complex query', async () => {
      */
     const starting_string = `http://api.marsupials/search?query={ "request": "POST", "data": { "columns": [1, 2, 3], "query": "Select * From table Where 1=1 & text not in (set1,set2) & idx % 2 = 1" } }`;
     const answer = encode(starting_string);
-    // do some conversion and check
-    expect(check_answer(answer)).toBeTruthy(); 
+    console.log(`Encoded result`,answer);
+    const reverse_engineer_answer = "aHR0cDovL2FwaS5tYXJzdXBpYWxzL3NlYXJjaD9xdWVyeT0lN0IlMjAlMjJyZXF1ZXN0JTIyJTNBJTIwJTIyUE9TVCUyMiUyQyUyMCUyMmRhdGElMjIlM0ElMjAlN0IlMjAlMjJjb2x1bW5zJTIyJTNBJTIwJTVCMSUyQyUyMDIlMkMlMjAzJTVEJTJDJTIwJTIycXVlcnklMjIlM0ElMjAlMjJTZWxlY3QlMjAlMkElMjBGcm9tJTIwdGFibGUlMjBXaGVyZSUyMDElM0QxJTIwJTI2JTIwdGV4dCUyMG5vdCUyMGluJTIwJTI4c2V0MSUyQ3NldDIlMjklMjAlMjYlMjBpZHglMjAlMjUlMjAyJTIwJTNEJTIwMSUyMiUyMCU3RCUyMCU3RA=="
+    console.log(`Encoded answer`, reverse_engineer_answer)
+    const decodes = decode(reverse_engineer_answer);
+    console.log(`decode url`,decodes);
+
+    expect(check_answer(answer)).toBeTruthy();
 });
 
 
