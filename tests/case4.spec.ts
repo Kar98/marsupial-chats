@@ -1,4 +1,5 @@
 import { test, expect, Page, Locator } from '@playwright/test';
+import { BridgesPage } from '../data/case4/classes';
 
 /** Task:
  * A new webpage is being developed for a bridge company and you have been asked to make sure it works correctly. You've decided to use playwright
@@ -11,29 +12,7 @@ import { test, expect, Page, Locator } from '@playwright/test';
  * How to run the server:
  * node data/case4/index.js
  */
-/** This is the main Bridges page. Setup how you would design this page. It can be done here or you can create a new file and import in the class
- * It's encouraged that you write your own design for the About section.
- */
-class BridgesPage{
-    // This is for the about section.
-    // Below would be selectors/xpaths
-    main: string;
-    description: string;
-    view: string;
-    rssFeed: Locator;
-    totalBridges: number;
-    async clickView(): Promise<void>{};
-    async clickGetRssFeed(): Promise<void>{};
-    // All the other details for 
-}
 
-/**
- * Create designs for:
- *  - Popular posts
- *  - Tags
- *  - Suspension bridge
- *  - Beam bridge
- */
 
 function sleep(milliseconds: number) {
   return new Promise(function (resolve) {
@@ -48,7 +27,12 @@ test.beforeAll(async({page}) => {
 
 test('Check about page', async ({ page }) => {
     const bridges = new BridgesPage();
-    // Tests would be created below using the page object.
+    // Access obj directly, rather than through functions
+    let bridge_totals = await bridges.aboutPage.get_total();
+    // Cant have async in constructor, so forced to use functions to get the other objs
+    let pop_posts = await bridges.get_popular_posts();
+    let tags = await bridges.get_tags();
+    let main_posts = await bridges.get_main_posts();
 });
 
 
