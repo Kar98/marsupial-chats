@@ -20,9 +20,9 @@ function sleep(milliseconds: number) {
   });
 }
 
-test.beforeAll(async({page}) => {
-    await page.goto("http://localhost:3000");
-    await sleep(500); // So it renders the imgs/buttons properly
+test.beforeEach(async({page})=>{
+  await page.goto("http://localhost:3000");
+  await sleep(500); // So it renders the imgs/buttons properly
 });
 
 test('Check about page', async ({ page }) => {
@@ -33,6 +33,11 @@ test('Check about page', async ({ page }) => {
     let pop_posts = await bridges.get_popular_posts();
     let tags = await bridges.get_tags();
     let main_posts = await bridges.get_main_posts();
+
+    expect(bridge_totals).toBeDefined();
+    expect(pop_posts).toBeDefined();
+    expect(tags).toBeDefined();
+    expect(main_posts).toBeDefined();
 });
 
 

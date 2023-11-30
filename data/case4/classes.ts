@@ -1,9 +1,4 @@
-import { Locator } from "@playwright/test";
-
-
-
-
-
+import { Locator, Page } from "@playwright/test";
 
 export class MainPost{
     title: Locator;
@@ -19,6 +14,9 @@ export class MainPost{
   }
   
   export class AboutPage{
+    constructor(page: Page){
+
+    }
     text: Locator;
     viewBtn: Locator;
     rssFeed: Locator;
@@ -32,6 +30,9 @@ export class MainPost{
    * It's encouraged that you write your own design for the About section.
    */
   export class BridgesPage{
+    constructor(page: Page){
+        this.aboutPage = new AboutPage(page);
+    }
       aboutPage: AboutPage;
       async get_main_posts(): Promise<MainPost[]>{
         return [];
